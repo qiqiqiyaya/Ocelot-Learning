@@ -27,10 +27,16 @@ builder.WebHost
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddOcelot();
+var authenticationProviderKey = "Bearer";
+builder.Services.AddAuthentication(authenticationProviderKey)
+    .AddJwtBearer(authenticationProviderKey, options =>
+    {
+        options.Audience = "apiAudience";
+        options.RequireHttpsMetadata = false;
+    });
 
 var app = builder.Build();
 
-app.UseOcelot().Wait();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -40,7 +46,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseOcelot().Wait();
 
 app.MapRazorPages();
 

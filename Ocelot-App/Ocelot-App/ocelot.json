@@ -1,8 +1,22 @@
 {
   "Routes": [
+    //{
+    //  "DownstreamPathTemplate": "/api/WeatherForecast",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5001
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/Weather",
+    //  "UpstreamHttpMethod": [ "Get" ]
+    //},
     {
+      // JWT token
       "DownstreamPathTemplate": "/api/WeatherForecast",
       "DownstreamScheme": "http",
+      "RouteIsCaseSensitive": false,
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -10,9 +24,14 @@
         }
       ],
       "UpstreamPathTemplate": "/Weather",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     }
   ],
+
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
   }
